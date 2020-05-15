@@ -10,7 +10,7 @@ if ($_POST){
     $vulnhash = md5( $plain_text_password ); #md5
     $safeway = "False";
 
-    $sql = "INSERT INTO tb_student (mail, firstname, lastname, pass, safeway)
+    $sql = "INSERT INTO tb_student (email, firstname, lastname, password, safeway)
     VALUES ('".$_POST['mail']."', '".$name['first_name']."', '".$name['last_name']."', '".$vulnhash."', '".$safeway."')";
 
     if ($conn->query($sql) === TRUE) {

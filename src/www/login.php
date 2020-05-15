@@ -9,33 +9,32 @@ if($_POST){
     $mail = $_POST["mail"];
     $vulnhash = md5($_POST["pass"]); // Parse to MD5
     
-    $sql = "SELECT id, mail, firstname, lastname, pass, safeway
-    FROM tb_student where mail = '".$mail."' AND pass = '".$vulnhash."'";
+    $sql = "SELECT id, email, firstname, lastname, password, safeway
+    FROM tb_student where email = '".$mail."' AND password = '".$vulnhash."'";
 
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) <= 0){
         $string = new mystring;
-        $mail = $_POST["mail"];
+        $mail = $_POST["email"];
 
-        $plain_text_password = $_POST['pass'];
+        $plain_text_password = $_POST['password'];
         $salted = $string->saltPass($plain_text_password); #salt
         $safehash = md5($salted); // Parse to MD5
 
-        $sql = "SELECT id, mail, firstname, lastname, pass, safeway
-        FROM tb_student where mail = '".$mail."' AND pass = '".$safehash."'";
+        $sql = "SELECT id, email, firstname, lastname, password, safeway
+        FROM tb_student where email = '".$mail."' AND password = '".$safehash."'";
         $result = mysqli_query($conn, $sql);
     }
-
 
     $success = FALSE;
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while($row = mysqli_fetch_assoc($result)) {
             $id = $row["id"];
-            $mail = $row["mail"];
+            $mail = $row["email"];
             $firstname = $row["firstname"];
             $lastname = $row["lastname"];
-            $pass = $row["pass"];
+            $pass = $row["password"];
             $safeway = $row["safeway"];
             $success = TRUE;
         }
@@ -45,10 +44,10 @@ if($_POST){
     if($success){
         session_start();
         $_SESSION['id'] = $id;
-        $_SESSION['mail'] = $mail;
+        $_SESSION['email'] = $mail;
         $_SESSION['firstname'] = $firstname;
         $_SESSION['lastname'] = $lastname;
-        $_SESSION['pass'] = $pass;
+        $_SESSION['password'] = $pass;
         $_SESSION['safeway'] = $safeway;
         $_SESSION['loggedin'] = true;
         header("Location: /home.php");
