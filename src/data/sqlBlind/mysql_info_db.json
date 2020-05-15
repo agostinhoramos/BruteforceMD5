@@ -1,0 +1,25 @@
+{
+    "database": [
+        "information_schema"
+    ],
+    "table": [
+        "schemata"
+    ],
+    "column": [
+        "1",
+        "NULL"
+    ],
+    "comment": [
+        "/*",
+        "--",
+        "#"
+    ],
+    "sep":[
+        ", "
+    ],
+    "limit": [
+        "LIMIT <%X%>, <%Y%>",
+        ""
+    ],
+    "max_column" : 25
+}

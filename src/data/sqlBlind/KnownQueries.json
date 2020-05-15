@@ -1,0 +1,7 @@
+[
+    [
+        ["schema_name","information_schema.schemata"],
+        ["TABLE_NAME","information_schema.TABLES WHERE table_schema='<%tb%>' "],
+        ["COLUMN_NAME","information_schema.COLUMNS WHERE TABLE_NAME='<%tb%>' "]
+    ]
+]
