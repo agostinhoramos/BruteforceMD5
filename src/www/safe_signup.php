@@ -11,7 +11,7 @@ if ($_POST){
     $safehash = md5( $salted ); #md5
     $safeway = "True";
 
-    $sql = "INSERT INTO tb_student (mail, firstname, lastname, pass, safeway)
+    $sql = "INSERT INTO tb_student (email, firstname, lastname, password, safeway)
     VALUES ('".$_POST['mail']."', '".$name['first_name']."', '".$name['last_name']."', '".$safehash."', '".$safeway."')";
 
     if ($conn->query($sql) === TRUE) {

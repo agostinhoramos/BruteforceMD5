@@ -43,4 +43,38 @@ class html{
     }
 }
 
+class seed{
+    public function database(){
+        require_once __DIR__ . '/db.php';
+        if($need_seed){
+            // Create Database
+            $conn = new mysqli($servername, $username, $password);
+            $conn->query('CREATE DATABASE ' . $dbname);
+            $conn->close();
+            if (!$conn->connect_error) {
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                $sql = "CREATE TABLE `tb_student` (
+                    `id` int(11) NOT NULL,
+                    `email` varchar(280) NOT NULL,
+                    `firstname` varchar(150) NOT NULL,
+                    `lastname` varchar(150) NOT NULL,
+                    `password` varchar(250) NOT NULL,
+                    `safeway` varchar(5) NOT NULL
+                  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+                $conn->query($sql);
+                $sql = "ALTER TABLE `tb_student`
+                    ADD PRIMARY KEY (`id`),
+                    ADD UNIQUE KEY `email` (`email`);";
+                $conn->query($sql);
+                $sql = "ALTER TABLE `tb_student` CHANGE `id`"
+                        ." `id` INT(11) NOT NULL AUTO_INCREMENT;";
+                $conn->query($sql);
+                $conn->close();
+                header("Location: /?message=database_(".$dbname.")_created_successfully");
+                exit(0);
+            }
+        }
+    }
+}
+
 ?>
