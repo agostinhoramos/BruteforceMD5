@@ -58,3 +58,14 @@ class hack_SQL(App):
                             sys.stdout.flush()
         sys.stdout.write(' done!\n')
         return OBJ
+
+    def findAllData(self):
+        OBJ = {}
+        for table, columns in self.findDB().items():
+            for column in columns:
+                data = self.SQLfindAll(column, table)
+                OBJ.update({column : []})
+                if len(data) > 0:
+                    OBJ[column] = data
+        sys.stdout.write('\n>>> Searching all data...')
+        return OBJ
