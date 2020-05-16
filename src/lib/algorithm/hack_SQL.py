@@ -25,7 +25,7 @@ class hack_SQL(App):
                 obj.update({ attr : query })
 
             r = self.sendRequest(self.SQL['serverurl'], obj, self.SQL['method'])
-            r = r.split(self.TOKEN)[1].split(self.TOKEN)[0]
+            r = self.removeTOKEN(r, self.TOKEN)
         except:
             r = ''
         return r

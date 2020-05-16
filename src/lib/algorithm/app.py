@@ -74,3 +74,9 @@ class App:
         __pattern = re.compile(__regex)
         boo = __pattern.match(val)
         return bool(boo)
+
+    def removeTOKEN(self, str, token):
+        return str.split(token)[1].split(token)[0]
+
+    def addTOKEN(self, str, token):
+        return token + str + token

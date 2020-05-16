@@ -15,9 +15,9 @@ if($_POST){
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) <= 0){
         $string = new mystring;
-        $mail = $_POST["email"];
+        $mail = $_POST["mail"];
 
-        $plain_text_password = $_POST['password'];
+        $plain_text_password = $_POST['pass'];
         $salted = $string->saltPass($plain_text_password); #salt
         $safehash = md5($salted); // Parse to MD5
 
