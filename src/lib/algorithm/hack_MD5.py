@@ -2,32 +2,19 @@ from ..algorithm.app import App
 import itertools
 import threading
 import queue
-import hashlib
 import re
 
-Que = queue.Queue()
+Que = queue.Queue() #FIFO list
 
 class decrypt(App):
     def __init__(self, obj):
         self.OBJ = obj['obj']
         self.SQL = obj['sql']
-        self.passLen = 3 #By default
         self.numThread = 0
         self.numTry = 0
         self.numFound = 0
-        hash = self.getJSON(self.getJSON(self.OBJ['dir_hashes'])['localhost'])
+        hash = self.getJSON(self.OBJ['dir_hostHash'])
         Que.put(hash)
-
-    def setPath(self, path):
-        self.spath = path
-
-    def MD5HASH(self, my_str):
-        m = hashlib.md5()
-        m.update(my_str.encode('utf-8')) # Unicode
-        return m.hexdigest()
-    
-    def setPassLen(self, num):
-        self.passLen = num
 
     def getMD5(self):
         arr = []
@@ -57,7 +44,9 @@ class decrypt(App):
                     if i not in group:
                         pos = j%len(group)
                         hash = alist[group[pos]]
-                        obj[hash].update({attr:value})
+                        value = re.sub('[^0-9a-zA-Z]+','', value)
+                        if len(value) < 40:
+                            obj[hash].update({attr:value})
                         j += 1
                     i += 1
             Que.put(obj)
@@ -83,7 +72,7 @@ class decrypt(App):
                 self.numTry += 1
                 word = line.strip()
                 
-                if self.MD5HASH(word) == hash:
+                if self.md5(word) == hash:
                     self.numFound += 1
                     self.update_data(hash, word) #SAVE IT
                     return word
@@ -99,7 +88,7 @@ class decrypt(App):
                 self.numTry += 1
                 word = line.strip()
                 
-                if self.MD5HASH(word) == hash:
+                if self.md5(word) == hash:
                     self.numFound += 1
                     self.update_data(hash, word) #SAVE IT
                     return word
@@ -117,7 +106,7 @@ class decrypt(App):
                     self.numTry += 1
                     newstr = "".join(p)
                     if len(newstr) <= self.passLen:
-                        newhash = self.MD5HASH(newstr)
+                        newhash = self.md5(newstr)
                         if newhash == hash:
                             self.numFound += 1
                             self.update_data(hash, newstr) #SAVE IT
@@ -149,13 +138,15 @@ class main(App):
         self.OBJ = obj
     
     def exec(self, MD5fn, groups, hashes):
-      if not Que.empty():
-        threads = []
-        for group in groups:
-            for hash in hashes:
-                t = threading.Thread(target=MD5fn, args=[group, hash], daemon=True)
-                t.start()
-                threads.append(t)
-        for thread in threads:
-            thread.join()
-        self.setJSON(self.getJSON(self.OBJ['dir_hashes'])['localhost'], Que.get())
+        if not Que.empty():
+            threads = []
+            for group in groups:
+                for hash in hashes:
+                    t = threading.Thread(target=MD5fn, args=[group, hash], daemon=True)
+                    t.start()
+                    threads.append(t)
+            for thread in threads:
+                thread.join()
+
+            q = Que.get()
+            self.setJSON(self.OBJ['dir_hostHash'], q)

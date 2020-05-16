@@ -10,6 +10,7 @@ class hack_WEB(App):
         self.sql_sep = ', ' #by default
         self.main_url = self.obj['url_website']
         self.TOKEN = self.obj['app_token']
+        self.setJSON(self.obj['dir_hostHash'])
 
     #STUDING HTML WEBPAGE
     def HTMLformOBJ(self):

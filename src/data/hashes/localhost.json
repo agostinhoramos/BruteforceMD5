@@ -1,1 +1,0 @@
-{"202cb962ac59075b964b07152d234b70": {"id": "2", "email": "safeuser", "firstname": "Vulnerable", "lastname": "uvuln", "safeway": "False", "DecryptedMD5": ["123"]}, "03452a24141033e9896b1cfe874133f5": {"id": "1", "email": "vulnuser", "firstname": "Safe", "lastname": "User", "safeway": "True"}}

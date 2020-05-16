@@ -12,7 +12,7 @@ if(!isset($_SESSION['loggedin']) OR $_SESSION['loggedin'] !== true){
 <div class="limiter">
 <div class="container-login100">
 <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-<div class="login100-form validate-form" style="overflow:hidden;">
+<div class="login100-form validate-form" style="overflow:hidden2;">
     
     <div class="other">
         <a href="/login.php">
@@ -22,13 +22,13 @@ if(!isset($_SESSION['loggedin']) OR $_SESSION['loggedin'] !== true){
             
     <div><strong>ID:</strong> <?php echo $_SESSION['id']; ?></div>
     <br>
-    <div><strong>Mail:</strong> <?php echo $_SESSION['mail']; ?></div>
+    <div><strong>Mail:</strong> <?php echo $_SESSION['email']; ?></div>
     <br>
     <div><strong>First Name:</strong> <?php echo $_SESSION['firstname']; ?></div>
     <br>
     <div><strong>Last Name:</strong> <?php echo $_SESSION['lastname']; ?></div>
     <br>
-    <div><strong>Password:</strong> <?php echo $_SESSION['pass']; ?></div>
+    <div><strong>Password:</strong> <?php echo $_SESSION['password']; ?></div>
     <br>
     <div><strong>Safeway:</strong> <?php echo $_SESSION['safeway']; ?></div>
 

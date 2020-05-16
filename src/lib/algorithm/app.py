@@ -1,5 +1,8 @@
-import json
+from urllib.parse import urlparse
+from pathlib import Path
 import requests
+import hashlib
+import json
 import re
 
 class App:
@@ -16,9 +19,21 @@ class App:
             content = '{}'
         return json.loads(content)
 
-    def setJSON(self, url, data):
+    def setJSON(self, url, data = {}):
         with open(url, 'w') as f:
             f.write(json.dumps(data))
+
+    def fileExist(self, url):
+        my_file = Path(url)
+        if my_file.is_file():
+            return True
+        else:
+            return False
+    
+    def md5(self, my_str):
+        m = hashlib.md5()
+        m.update(my_str.encode('utf-8')) # Unicode
+        return m.hexdigest()
 
     def sendRequest(self, url, obj, type=1):
         req = ''
@@ -80,3 +95,6 @@ class App:
 
     def addTOKEN(self, str, token):
         return token + str + token
+
+    def hostname(self, url):
+        return urlparse(url).hostname

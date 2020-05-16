@@ -21,6 +21,6 @@ def isCredential(val):
 
 
 def opc(x):
-    if x=='1' or x=='2':
+    if x in ['1','2','3','4']:
         return True
     return False
