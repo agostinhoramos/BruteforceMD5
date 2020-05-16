@@ -105,7 +105,7 @@ class decrypt(App):
                 for p in itertools.permutations(group, i):
                     self.numTry += 1
                     newstr = "".join(p)
-                    if len(newstr) <= self.passLen:
+                    if len(newstr) <= 30: # Password length less than 30
                         newhash = self.md5(newstr)
                         if newhash == hash:
                             self.numFound += 1

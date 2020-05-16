@@ -1,3 +1,20 @@
 [
-    "src/data/attack/dictionary/Abbreviations.dic"
+    "src/data/attack/dictionary/dictionary_brazilian.dic",
+    "src/data/attack/dictionary/dictionary_portuguese.dic",
+    "src/data/attack/dictionary/dictionary_english.dic",
+    "src/data/attack/dictionary/dictionary_huge_0.dic",
+    "src/data/attack/dictionary/dictionary_huge_1.dic",
+    "src/data/attack/dictionary/dictionary_huge_2.dic",
+    "src/data/attack/dictionary/dictionary_huge_3.dic",
+    "src/data/attack/dictionary/dictionary_huge_4.dic",
+    "src/data/attack/dictionary/dictionary_huge_5.dic",
+    "src/data/attack/dictionary/dictionary_huge_6.dic",
+    "src/data/attack/dictionary/dictionary_huge_7.dic",
+    "src/data/attack/dictionary/dictionary_huge_8.dic",
+    "src/data/attack/dictionary/dictionary_huge_9.dic",
+    "src/data/attack/dictionary/dictionary_huge_a.dic",
+    "src/data/attack/dictionary/dictionary_huge_b.dic",
+    "src/data/attack/dictionary/dictionary_huge_c.dic",
+    "src/data/attack/dictionary/dictionary_huge_d.dic",
+    "src/data/attack/dictionary/dictionary_huge_e.dic"
 ]
