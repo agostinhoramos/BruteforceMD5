@@ -1,10 +1,10 @@
 <?php
 
 $servername = "localhost";
-$username = "user_admin";
-$password = "R4984HU78EWYJHFWE";
+$username = "root";
+$password = "";
 
-$dbname = "db_ipg";
+$dbname = "dbipg";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

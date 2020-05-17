@@ -75,7 +75,7 @@ class decrypt(App):
                 if self.md5(word) == hash:
                     self.numFound += 1
                     self.update_data(hash, word) #SAVE IT
-                    return word
+                    return ''
                 line = fp.readline()
         return ''
     

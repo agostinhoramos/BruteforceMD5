@@ -1,14 +1,14 @@
 [
     "src/data/attack/wordlist/500-worst-passwords.txt",
     "src/data/attack/wordlist/john.txt",
-    "src/data/attack/wordlist/hotmail-withcount.txt",
+    "src/data/attack/wordlist/hotmail.txt",
     "src/data/attack/wordlist/twitter-banned.txt",
-    "src/data/attack/wordlist/myspace-withcount.txt",
-    "src/data/attack/wordlist/singles.org-withcount.txt",
-    "src/data/attack/wordlist/hak5-withcount.txt",
+    "src/data/attack/wordlist/myspace.txt",
+    "src/data/attack/wordlist/singles.org.txt",
+    "src/data/attack/wordlist/hak5.txt",
     "src/data/attack/wordlist/phpbb-withmd5.txt",
-    "src/data/attack/wordlist/tuscl-withcount.txt",
+    "src/data/attack/wordlist/tuscl.txt",
     "src/data/attack/wordlist/faithwriters.txt",
-    "src/data/attack/wordlist/facebook-phished-withcount.txt",
+    "src/data/attack/wordlist/facebook-phished.txt",
     "src/data/attack/wordlist/facebook-pastebay.txt"
 ]
