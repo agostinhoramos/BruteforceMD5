@@ -51,8 +51,8 @@ class App:
         else:
             return requests.compat.urljoin(url,url2)
 
-    def unifyColumn(self,arr, _sep = ';', sep = ', '):
-        sql_sep = sep+self.parseCHAR([_sep],sep)
+    def unifyColumn(self,arr, _sep = ['{','<','s','-','e','-','p','>','}'], sep = ', '):
+        sql_sep = sep+self.parseCHAR(_sep,sep)
         cat = ''
         for i in range(0, len(arr)):
             if len(cat)>0:

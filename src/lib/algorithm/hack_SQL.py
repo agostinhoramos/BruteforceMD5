@@ -38,7 +38,7 @@ class hack_SQL(App):
             val = self.mysql(column, table, count)
             if val:
                 if matrix:
-                    val = val.split(';')
+                    val = val.split('{<s-e-p>}')
                 arr.append(val)
                 count += 1
         return arr
@@ -66,12 +66,9 @@ class hack_SQL(App):
             values = self.SQLfindAll(self.unifyColumn(columns), table, matrix=True)
         for column in columns:
             OBJ.update({column:[]})
-        try:
-            for value in values:
+        for value in values:
                 for v in range(0, len(value)):
                     OBJ[columns[v]].append(value[v])
-        except:
-            pass
 
         sys.stdout.write('\n>>> Searching all data...')
         return OBJ
