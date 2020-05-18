@@ -66,9 +66,12 @@ class hack_SQL(App):
             values = self.SQLfindAll(self.unifyColumn(columns), table, matrix=True)
         for column in columns:
             OBJ.update({column:[]})
-        for value in values:
-            for v in range(0, len(value)):
-                OBJ[columns[v]].append(value[v])
+        try:
+            for value in values:
+                for v in range(0, len(value)):
+                    OBJ[columns[v]].append(value[v])
+        except:
+            pass
 
         sys.stdout.write('\n>>> Searching all data...')
         return OBJ
