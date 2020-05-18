@@ -61,7 +61,7 @@ if len(obj) > 0:
     print( "\nWe found: " + str(obj) )
     hs = hack_SQL(obj)
     obj = hs.findAllData()
-    
+
     if len(obj) > 0:
         print( "\nWe found: " + str(obj) )
 

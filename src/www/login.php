@@ -7,24 +7,19 @@ if($_POST){
     require __DIR__ . '/fn.php';
 
     $mail = $_POST["mail"];
-    $vulnhash = md5($_POST["pass"]); // Parse to MD5
+    $pass = $_POST['pass'];
     
-    $sql = "SELECT id, email, firstname, lastname, password, safeway
-    FROM tb_student where email = '".$mail."' AND password = '".$vulnhash."'";
+    $vulnhash = md5($pass); // Parse to MD5
 
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) <= 0){
-        $string = new mystring;
-        $mail = $_POST["mail"];
+    $string = new mystring;
+    $salted = $string->saltPass($pass); #salt
+    $safehash = md5($salted); // Parse to MD5
 
-        $plain_text_password = $_POST['pass'];
-        $salted = $string->saltPass($plain_text_password); #salt
-        $safehash = md5($salted); // Parse to MD5
+    $SQL = "SELECT id, email, firstname, lastname, password, safeway FROM tb_student
+    WHERE email = '".$mail."' AND PASSWORD='".$safehash."' ".
+    "OR email = '".$mail."' AND PASSWORD='".$vulnhash."' LIMIT 0, 1";
 
-        $sql = "SELECT id, email, firstname, lastname, password, safeway
-        FROM tb_student where email = '".$mail."' AND password = '".$safehash."'";
-        $result = mysqli_query($conn, $sql);
-    }
+    $result = mysqli_query($conn, $SQL);
 
     $success = FALSE;
     if (mysqli_num_rows($result) > 0) {
