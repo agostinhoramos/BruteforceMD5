@@ -27,7 +27,7 @@ def smart_path(dir = ''):
 r = console({
     'ask': [
         [
-            'Please write the web page with an input? ',
+            'Please, introduce website URL (e.g. http://localhost)? ',
             '1 - Dictionary \n2 - WordList \n3 - Bruteforce \n4 - RainbowTable \nPlease choose Attack type? '
         ],
         [
