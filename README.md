@@ -9,7 +9,7 @@
 <p>&nbsp; pip install bs4</p>
 <p>&nbsp; pip install requests</p>
 <p>&nbsp; install Xampp (SERVER)</p>
-<p>&nbsp; XAMPP: change the path from xampp to <code>../BruteforceMD5/src/www<code></p>
+<p>&nbsp; XAMPP: change the path from xampp to <code>../BruteforceMD5/src/www</code></p>
 
 <code>
   <p>Example: </p>
@@ -22,7 +22,6 @@
   <p>[+] Finished in 184.72 second(s)</p>
   <p>[+] File: C:../../src/data/hash.json</p>
 </code>
-
 Some developers, when creating a login system using MD5, do not do it in a secure way, the password entered by the application user is the same password that goes into the database. as shown in the figure below
 <br/>
 # Front End
@@ -39,7 +38,7 @@ Some developers, when creating a login system using MD5, do not do it in a secur
 </code>
 <br/>
 <br/>
-<img src="assets/hacker.jpg" />
+<img src="assets/hacker.jpg" ></img>
 <br/>
 The bad news is that this form of encryption can be easily broken, with some technical help:
 ### - [BruteForce](https://www.comparitech.com/blog/information-security/brute-force-attack/)
@@ -74,4 +73,4 @@ Don't worry, there is a solution for this type of problem.
 ### Add type
 <img src="assets/addtype.png" /><br/><br/>
 ### Wait for the result
-<img src="assets/result.png" />
+<img src="assets/result.png" ></img>
